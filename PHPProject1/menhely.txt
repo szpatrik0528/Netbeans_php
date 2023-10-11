@@ -1,0 +1,10 @@
+Adatbázis
+
+- top - down -> ER- diagram
+- down - top -> normalizálás 3NF
+- konzisztencia (valósághű)
+- inkonzisztens
+
+netbeans:
+
+emailcim, igazolvanyszam, felhasználónév jelszó jelszó megerősítés 
