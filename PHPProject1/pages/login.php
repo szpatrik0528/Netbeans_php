@@ -5,13 +5,13 @@ if (filter_input(INPUT_POST,
                 FILTER_NULL_ON_FAILURE)) {
     //-- A kapott adatok feldolgozása    
     $username = htmlspecialchars(filter_input(INPUT_POST, 'username'));
-    $password = htmlspecialchars(filter_input(INPUT_POST, 'password'));
-    $email = $email = filter_input(INPUT_POST, "emailcim", FILTER_VALIDATE_EMAIL);
-    $db->login($email ,$username, $password);
 
-    if ($db->login($email, $username, $password)) {
+    $pass = htmlspecialchars(filter_input(INPUT_POST, 'password'));
+    $email = filter_input(INPUT_POST, "emailcim", FILTER_VALIDATE_EMAIL);
+    $db->login($email, $username, $pass);
+
+    if ($db->login($email, $username, $pass)) {
         $_SESSION['login'] = true;
-        $_SESSION['emailcim'] = '';
         $_SESSION['username'] = '';
         $_SESSION['password'] = '';
     }

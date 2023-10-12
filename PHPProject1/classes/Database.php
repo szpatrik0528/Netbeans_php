@@ -8,31 +8,22 @@ class Database {
         $this->db = new mysqli($host, $user, $pass, $db);
     }
 
-    public function login($name, $pass) {
-        //-- jelezzük a végrehajtandó SQL parancsot 
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE users.username LIKE ?;');
-        //-- elküdjük a végrehajtáshoz szükséges adatokat
-        $stmt->bind_param("s", $name);
-        if ($stmt->execute()) {
-            //-- sikeres végrehajtás után lekérjük az adatokat
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            //var_dump(password_hash($pass, PASSWORD_ARGON2I));
-            var_dump($row['password'], $pass);
-            if ($pass == $row['password']) {
-                //-- felhasználónáv és jelszó helyes
-                $_SESSION['username'] = $row['name'];
-                $_SESSION['login'] = true;
-            } else {
-                $_SESSION['username'] = '';
-                $_SESSION['login'] = false;
-            }
-            // Free result set
-            $result->free_result();
+    public function login($email, $name, $pass) {
+    $stmt = $this->db->prepare('SELECT `userid`, `emailcim`, `username`, `password` FROM `users` WHERE username = ? and emailcim = ? and password = ?');
+    $stmt->bind_param("sss", $name, $email, $pass);
+    
+    if ($stmt->execute()) {
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) {
+            $_SESSION['login'] = true;
             header("Location: index.php");
+        } else {
+            echo "Nem megfelelő bejelentkezési adat!"; 
         }
-        return false;
     }
+    $stmt->close();
+}
+
 
     public function register($igazolvanyszam, $orokbefogado_neve, $email, $name, $pass1) {
         $stmt = $this->db->prepare("INSERT INTO `users`(`userid`, `igazolvanyszam`, `orokbefogado_neve`, `emailcim`, `username`, `password`) VALUES (NULL,?,?,?,?,?)");
