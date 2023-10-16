@@ -11,14 +11,11 @@ class Database {
     public function login($email, $name, $pass) {
     $stmt = $this->db->prepare('SELECT `userid`, `emailcim`, `username`, `password` FROM `users` WHERE username = ? and emailcim = ? and password = ?');
     $stmt->bind_param("sss", $name, $email, $pass);
-    
     if ($stmt->execute()) {
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
             $_SESSION['login'] = true;
             header("Location: index.php");
-        } else {
-            echo "Nem megfelelő bejelentkezési adat!"; 
         }
     }
     $stmt->close();
@@ -43,5 +40,15 @@ class Database {
 
             echo 'Error: ' . $e->getMessage();
         }
+    }
+    
+    function osszesAllat(){
+        $result = $this->db->query("SELECT * FROM allat");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    function kivalasztottAllat($id){
+        $result = $this->db->query("SELECT * FROM `allat` WHERE allatid=".$id);
+        return $result->fetch_assoc();
     }
 }
