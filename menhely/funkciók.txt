@@ -1,0 +1,22 @@
+Menhely
+controller - routing
+Vendég
+- Regisztráció (email, név, jelszó)
+- Login
+- Home - megtekintheti az állatokat
+	- lista
+	- egyedi (név, kor, faj, fajta, ...)
+- rólunk 
+- örökbefogadás ismertetése
+
+
+Felhasználó:
+- időpont foglalás
+- örökbefogadás jelzése
+- kilépés
+
+
+C - CREATE - INSERT
+R - SHOW - SELECT
+U - ALTER - UPDATE
+D - DROP - DELETE
